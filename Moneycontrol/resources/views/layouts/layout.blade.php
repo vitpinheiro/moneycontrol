@@ -10,28 +10,76 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha384-ILU+3nGrT9E6c+hZXxOX7onfSBdT4PzqjT/m9zNxAPec+zVjLTVXK8u89D4p0Whw" crossorigin="anonymous">
 
 </head>
+<style>
+      /* Estilo para o hover dos itens do menu */
+      .navbar-nav .nav-link {
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar-nav .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #000;
+        width: 8em;
+        border-radius: 5%;
+    }
+    /* Alinhamento à esquerda e espaçamento no menu colapsado */
+    .collapse .navbar-nav {
+        align-items: flex-start;
+    }
+    /* Remove a animação de colapso para que o menu apareça imediatamente */
+    .navbar-collapse.collapse.show {
+        transition: none;
+        margin-top: 2em;
+    }
+    .nowrap {
+        white-space: nowrap; /* Impede a quebra de linha */
+    }
+
+</style>
+
 <body>
     
 <header>
-    <nav class=" bg-success navbar navbar-expand-lg">
+    <nav class="bg-success navbar navbar-expand-lg">
         <div class="container-fluid">
+            <!-- Logo and Title -->
             <a href="{{ url('home') }}" class="d-flex align-items-center">
-                <img src="{{asset('icons/logo.png') }}" class="logo" alt="MoneyControl"><h1>MoneyControl</h1>
+                <img src="{{ asset('icons/logo.png') }}" class="logo" alt="MoneyControl">
+                <h1 class="ms-2 text-white">MoneyControl</h1>
             </a>
-            <div class="d-flex align-items-center">
-                <div class="dropdown me-2">
-                    <button class="entrar-navbar" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-chevron-down"></i> 
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ url('profile.edit') }}">Meus dados</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a></li>
+
+            <!-- Navbar Toggle for Small Screens -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Greeting and Dropdown Menu Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center ms-lg-auto">
+                    <!-- Greeting -->
+                    <div class="me-5 text-white nowrap">
+                        Olá, {{ Auth::user()->name }}!
+                    </div>
+                    
+                    <!-- Direct Menu Items without Additional Dropdown -->
+                    <ul class="navbar-nav w-100">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('profile.edit') }}">Meus dados</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
 </header>
+
+<!-- Formulário de logout oculto -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+
 
 <main class="container">
     @yield('content')
