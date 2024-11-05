@@ -18,7 +18,7 @@
     .navbar-nav .nav-link:hover {
         background-color: rgba(255, 255, 255, 0.2);
         color: #000;
-        width: 8em;
+        width: 5em;
         border-radius: 5%;
     }
     /* Alinhamento à esquerda e espaçamento no menu colapsado */
@@ -37,7 +37,6 @@
 </style>
 
 <body>
-    
 <header>
     <nav class="bg-success navbar navbar-expand-lg">
         <div class="container-fluid">
@@ -52,7 +51,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Greeting and Dropdown Menu Items -->
+            <!-- Greeting and Dropdown Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center ms-lg-auto">
                     <!-- Greeting -->
@@ -60,15 +59,29 @@
                         Olá, {{ Auth::user()->name }}!
                     </div>
                     
-                    <!-- Direct Menu Items without Additional Dropdown -->
-                    <ul class="navbar-nav w-100">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('profile.edit') }}">Meus dados</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
-                        </li>
-                    </ul>
+                    <!-- Direct Menu Items for Small Screens -->
+                    <div class="d-lg-none">
+                        <a class="nav-link text-white" href="{{ route('profile.edit') }}">Meu Perfil</a>
+                        <a class="nav-link text-white" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+                    </div>
+
+                    <!-- Dropdown Menu for Larger Screens -->
+                    <div class="dropdown d-none d-lg-block" style="cursor: pointer;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Menu
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('entrada') }}">Movimentações</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Meu Perfil</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
